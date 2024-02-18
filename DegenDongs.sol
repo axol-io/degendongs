@@ -10,6 +10,7 @@ import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import {Arrays} from "@openzeppelin/contracts/utils/Arrays.sol";
+import "./IBlast.sol"; 
 
 // Pool for issuing cETH and fETH
 contract DegenDongs is
@@ -42,7 +43,10 @@ contract DegenDongs is
     mapping (uint256 => address) public _dongHolders;
     mapping (uint256 => uint256[]) public _meatHolders;
 
-    constructor() ERC1155("ipfs://YourIPFSLinkHere/{id}.json") Ownable(msg.sender) {}
+    constructor() ERC1155("ipfs://k51qzi5uqu5dk8485k3h956mnjbrq35dg6gxp4il0x4wippdps92ap3n6jfrbo/{id}.json") Ownable(msg.sender) {
+        IBlast(0x4300000000000000000000000000000000000002).configureAutomaticYield();
+        IBlast(0x4300000000000000000000000000000000000002).configureGovernor(msg.sender);
+    }
 
     function setURI(string memory newuri) external onlyOwner {
         _setURI(newuri);
